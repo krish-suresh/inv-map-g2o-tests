@@ -1,0 +1,179 @@
+[0.189s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'list', '-p', '--base-paths', '/home/ksuresh/inv-map-work-22']
+[0.189s] DEBUG:colcon:Parsed command line arguments: Namespace(allow_overriding=[], base_paths=['/home/ksuresh/inv-map-work-22'], build_base='build', ignore_user_meta=False, log_base=None, log_level=None, main=<bound method ListVerb.main of <colcon_package_information.verb.list.ListVerb object at 0x7fe9992ebfa0>>, metas=['./colcon.meta'], names_only=False, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_end=None, packages_ignore=None, packages_ignore_regex=None, packages_select=None, packages_select_build_failed=False, packages_select_by_dep=None, packages_select_regex=None, packages_select_test_failures=False, packages_skip=None, packages_skip_build_finished=False, packages_skip_by_dep=None, packages_skip_regex=None, packages_skip_test_passed=False, packages_skip_up_to=None, packages_start=None, packages_up_to=None, packages_up_to_regex=None, paths=None, paths_only=True, topological_graph=False, topological_graph_density=False, topological_graph_dot=False, topological_graph_dot_cluster=False, topological_graph_dot_include_skipped=False, topological_graph_legend=False, topological_order=False, verb_extension=<colcon_package_information.verb.list.ListVerb object at 0x7fe9992ebfa0>, verb_name='list', verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0x7fe9991e1c40>)
+[0.227s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.227s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.227s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.227s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.227s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.227s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/ksuresh/inv-map-work-22'
+[0.227s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22) by extensions ['ignore', 'ignore_ament_install']
+[0.227s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22) by extension 'ignore'
+[0.227s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22) by extension 'ignore_ament_install'
+[0.227s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22) by extensions ['colcon_pkg']
+[0.228s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22) by extension 'colcon_pkg'
+[0.228s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22) by extensions ['colcon_meta']
+[0.228s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22) by extension 'colcon_meta'
+[0.228s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22) by extensions ['ros']
+[0.228s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22) by extension 'ros'
+[0.239s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22) by extensions ['cmake', 'python']
+[0.239s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22) by extension 'cmake'
+[0.239s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22) by extension 'python'
+[0.239s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22) by extensions ['python_setup_py']
+[0.239s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22) by extension 'python_setup_py'
+[0.239s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build) by extensions ['ignore', 'ignore_ament_install']
+[0.239s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build) by extension 'ignore'
+[0.239s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build) by extension 'ignore_ament_install'
+[0.239s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build) by extensions ['colcon_pkg']
+[0.239s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build) by extension 'colcon_pkg'
+[0.239s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build) by extensions ['colcon_meta']
+[0.239s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build) by extension 'colcon_meta'
+[0.239s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build) by extensions ['ros']
+[0.239s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build) by extension 'ros'
+[0.240s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build) by extensions ['cmake', 'python']
+[0.240s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build) by extension 'cmake'
+[0.240s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build) by extension 'python'
+[0.240s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build) by extensions ['python_setup_py']
+[0.240s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build) by extension 'python_setup_py'
+[0.240s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles) by extensions ['ignore', 'ignore_ament_install']
+[0.240s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles) by extension 'ignore'
+[0.240s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles) by extension 'ignore_ament_install'
+[0.240s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles) by extensions ['colcon_pkg']
+[0.240s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles) by extension 'colcon_pkg'
+[0.240s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles) by extensions ['colcon_meta']
+[0.240s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles) by extension 'colcon_meta'
+[0.240s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles) by extensions ['ros']
+[0.240s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles) by extension 'ros'
+[0.240s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles) by extensions ['cmake', 'python']
+[0.240s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles) by extension 'cmake'
+[0.240s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles) by extension 'python'
+[0.241s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles) by extensions ['python_setup_py']
+[0.241s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles) by extension 'python_setup_py'
+[0.241s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3) by extensions ['ignore', 'ignore_ament_install']
+[0.241s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3) by extension 'ignore'
+[0.241s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3) by extension 'ignore_ament_install'
+[0.241s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3) by extensions ['colcon_pkg']
+[0.241s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3) by extension 'colcon_pkg'
+[0.241s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3) by extensions ['colcon_meta']
+[0.241s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3) by extension 'colcon_meta'
+[0.241s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3) by extensions ['ros']
+[0.241s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3) by extension 'ros'
+[0.241s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3) by extensions ['cmake', 'python']
+[0.241s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3) by extension 'cmake'
+[0.241s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3) by extension 'python'
+[0.241s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3) by extensions ['python_setup_py']
+[0.241s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3) by extension 'python_setup_py'
+[0.241s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC) by extensions ['ignore', 'ignore_ament_install']
+[0.242s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC) by extension 'ignore'
+[0.242s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC) by extension 'ignore_ament_install'
+[0.242s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC) by extensions ['colcon_pkg']
+[0.242s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC) by extension 'colcon_pkg'
+[0.242s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC) by extensions ['colcon_meta']
+[0.242s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC) by extension 'colcon_meta'
+[0.242s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC) by extensions ['ros']
+[0.242s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC) by extension 'ros'
+[0.242s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC) by extensions ['cmake', 'python']
+[0.242s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC) by extension 'cmake'
+[0.242s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC) by extension 'python'
+[0.242s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC) by extensions ['python_setup_py']
+[0.242s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC) by extension 'python_setup_py'
+[0.242s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC/tmp) by extensions ['ignore', 'ignore_ament_install']
+[0.242s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC/tmp) by extension 'ignore'
+[0.242s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC/tmp) by extension 'ignore_ament_install'
+[0.243s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC/tmp) by extensions ['colcon_pkg']
+[0.243s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC/tmp) by extension 'colcon_pkg'
+[0.243s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC/tmp) by extensions ['colcon_meta']
+[0.243s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC/tmp) by extension 'colcon_meta'
+[0.243s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC/tmp) by extensions ['ros']
+[0.243s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC/tmp) by extension 'ros'
+[0.243s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC/tmp) by extensions ['cmake', 'python']
+[0.243s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC/tmp) by extension 'cmake'
+[0.243s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC/tmp) by extension 'python'
+[0.243s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC/tmp) by extensions ['python_setup_py']
+[0.243s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdC/tmp) by extension 'python_setup_py'
+[0.243s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX) by extensions ['ignore', 'ignore_ament_install']
+[0.243s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX) by extension 'ignore'
+[0.243s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX) by extension 'ignore_ament_install'
+[0.243s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX) by extensions ['colcon_pkg']
+[0.243s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX) by extension 'colcon_pkg'
+[0.243s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX) by extensions ['colcon_meta']
+[0.243s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX) by extension 'colcon_meta'
+[0.243s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX) by extensions ['ros']
+[0.244s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX) by extension 'ros'
+[0.244s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX) by extensions ['cmake', 'python']
+[0.244s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX) by extension 'cmake'
+[0.244s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX) by extension 'python'
+[0.244s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX) by extensions ['python_setup_py']
+[0.244s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX) by extension 'python_setup_py'
+[0.244s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX/tmp) by extensions ['ignore', 'ignore_ament_install']
+[0.244s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX/tmp) by extension 'ignore'
+[0.244s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX/tmp) by extension 'ignore_ament_install'
+[0.244s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX/tmp) by extensions ['colcon_pkg']
+[0.244s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX/tmp) by extension 'colcon_pkg'
+[0.244s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX/tmp) by extensions ['colcon_meta']
+[0.244s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX/tmp) by extension 'colcon_meta'
+[0.244s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX/tmp) by extensions ['ros']
+[0.244s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX/tmp) by extension 'ros'
+[0.244s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX/tmp) by extensions ['cmake', 'python']
+[0.244s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX/tmp) by extension 'cmake'
+[0.245s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX/tmp) by extension 'python'
+[0.245s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX/tmp) by extensions ['python_setup_py']
+[0.245s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/3.16.3/CompilerIdCXX/tmp) by extension 'python_setup_py'
+[0.245s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/CMakeTmp) by extensions ['ignore', 'ignore_ament_install']
+[0.245s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/CMakeTmp) by extension 'ignore'
+[0.245s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/CMakeTmp) by extension 'ignore_ament_install'
+[0.245s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/CMakeTmp) by extensions ['colcon_pkg']
+[0.245s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/CMakeTmp) by extension 'colcon_pkg'
+[0.245s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/CMakeTmp) by extensions ['colcon_meta']
+[0.245s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/CMakeTmp) by extension 'colcon_meta'
+[0.245s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/CMakeTmp) by extensions ['ros']
+[0.245s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/CMakeTmp) by extension 'ros'
+[0.245s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/CMakeTmp) by extensions ['cmake', 'python']
+[0.245s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/CMakeTmp) by extension 'cmake'
+[0.245s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/CMakeTmp) by extension 'python'
+[0.245s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/CMakeTmp) by extensions ['python_setup_py']
+[0.245s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/CMakeTmp) by extension 'python_setup_py'
+[0.246s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/Progress) by extensions ['ignore', 'ignore_ament_install']
+[0.246s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/Progress) by extension 'ignore'
+[0.246s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/Progress) by extension 'ignore_ament_install'
+[0.246s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/Progress) by extensions ['colcon_pkg']
+[0.246s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/Progress) by extension 'colcon_pkg'
+[0.246s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/Progress) by extensions ['colcon_meta']
+[0.246s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/Progress) by extension 'colcon_meta'
+[0.246s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/Progress) by extensions ['ros']
+[0.246s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/Progress) by extension 'ros'
+[0.246s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/Progress) by extensions ['cmake', 'python']
+[0.246s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/Progress) by extension 'cmake'
+[0.246s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/Progress) by extension 'python'
+[0.246s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/Progress) by extensions ['python_setup_py']
+[0.246s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/Progress) by extension 'python_setup_py'
+[0.246s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/parsemap.dir) by extensions ['ignore', 'ignore_ament_install']
+[0.246s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/parsemap.dir) by extension 'ignore'
+[0.246s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/parsemap.dir) by extension 'ignore_ament_install'
+[0.247s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/parsemap.dir) by extensions ['colcon_pkg']
+[0.247s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/parsemap.dir) by extension 'colcon_pkg'
+[0.247s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/parsemap.dir) by extensions ['colcon_meta']
+[0.247s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/parsemap.dir) by extension 'colcon_meta'
+[0.247s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/parsemap.dir) by extensions ['ros']
+[0.247s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/parsemap.dir) by extension 'ros'
+[0.247s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/parsemap.dir) by extensions ['cmake', 'python']
+[0.247s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/parsemap.dir) by extension 'cmake'
+[0.247s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/parsemap.dir) by extension 'python'
+[0.247s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/parsemap.dir) by extensions ['python_setup_py']
+[0.247s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/build/CMakeFiles/parsemap.dir) by extension 'python_setup_py'
+[0.247s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/log) by extensions ['ignore', 'ignore_ament_install']
+[0.247s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/log) by extension 'ignore'
+[0.247s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/log) ignored
+[0.247s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/src) by extensions ['ignore', 'ignore_ament_install']
+[0.247s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/src) by extension 'ignore'
+[0.248s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/src) by extension 'ignore_ament_install'
+[0.248s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/src) by extensions ['colcon_pkg']
+[0.248s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/src) by extension 'colcon_pkg'
+[0.248s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/src) by extensions ['colcon_meta']
+[0.248s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/src) by extension 'colcon_meta'
+[0.248s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/src) by extensions ['ros']
+[0.248s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/src) by extension 'ros'
+[0.248s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/src) by extensions ['cmake', 'python']
+[0.248s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/src) by extension 'cmake'
+[0.249s] Level 1:colcon.colcon_core.package_identification:_identify(/home/ksuresh/inv-map-work-22/src) by extension 'python'
+[0.249s] DEBUG:colcon.colcon_core.package_identification:Package '/home/ksuresh/inv-map-work-22/src' with type 'cmake' and name 'src'
+[0.249s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults

@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/parsemap.dir/parsemap.cpp.o  -o parsemap  -lg2o_csparse_extension -lg2o_cli -lg2o_core -lg2o_interface -lg2o_parser -lg2o_solver_cholmod -lg2o_solver_csparse -lg2o_solver_dense -lg2o_solver_pcg -lg2o_stuff -lg2o_types_icp -lg2o_types_sba -lg2o_types_sim3 -lg2o_types_slam2d -lg2o_types_slam3d 

@@ -35,13 +35,13 @@ int main(int argc, char const* argv[]) {
     Vector3d tr(half_tag_width, half_tag_width, 0);
     Vector3d bl(-half_tag_width, -half_tag_width, 0);
     Vector3d br(half_tag_width, -half_tag_width, 0);
-    std::array<Vector3d, 4> corners = {tl, tr, br, bl};
+    std::array<Vector3d, 4> corners = {bl, br, tr, tl};
     Eigen::Quaterniond q_no;
     q_no.setIdentity();
     Eigen::Isometry3d corner_pose;
     corner_pose = q_no;
 
-    std::map<int, std::array<VertexPointXYZ*, 4>> tag_vertices;
+    std::map<int, std::array<Eigen::Isometry3d, 4>> tag_poses;
 
     g2o::SparseOptimizer optimizer;
     optimizer.setVerbose(false);
@@ -59,6 +59,7 @@ int main(int argc, char const* argv[]) {
     json data = json::parse(f);
     auto tags = data["tag_vertices"];
     int v_i = 0;
+    int e_i = 0;
     for (auto tag : tags) {
         auto q_x = tag["rotation"]["x"].get<double>();
         auto q_y = tag["rotation"]["y"].get<double>();
@@ -78,23 +79,16 @@ int main(int argc, char const* argv[]) {
         Eigen::Isometry3d tag_pose;
         tag_pose = q;
         tag_pose.translation() = trans;
-        std::array<VertexPointXYZ*, 4> corner_vertices;
+        std::array<Eigen::Isometry3d, 4> corner_poses;
         // Add each tag corner to graph
         int i = 0;
         for (auto corner : corners) {
             corner_pose.translation() = corner;
             auto c_pose = tag_pose * corner_pose;
-            VertexPointXYZ* tag = new VertexPointXYZ();
-            tag->setEstimate(c_pose.translation());
-            // std::cout << c_pose.translation() << "\n";
-            tag->setId(v_i);
-            tag->setFixed(true);
-            optimizer.addVertex(tag);
-            corner_vertices[i] = tag;
+            corner_poses[i] = c_pose;
             i++;
-            v_i++;
         }
-        tag_vertices[tag_id] = corner_vertices;
+        tag_poses[tag_id] = corner_poses;
     }
 
     std::ifstream f_nav("krishnaRaiyanPaul.json");
@@ -103,9 +97,26 @@ int main(int argc, char const* argv[]) {
     auto tag_data = data_nav["tag_data"];
 
     std::map<int, std::vector<TagObs>> tag_obs_map;
+    std::map<int, std::array<VertexPointXYZ*, 4>> tag_vertices;
     // Load tags into map between poseid and tag obs
     for (auto tags : tag_data) {
         for (auto tag_obs : tags){
+            auto tag_id = tag_obs["tag_id"].get<int>();
+            if (tag_vertices.find(tag_id) == tag_vertices.end()) {
+                std::array<VertexPointXYZ*,4> corners;
+                int i = 0;
+                for (auto c_pose : tag_poses[tag_id]) {
+                    VertexPointXYZ* tag_corner = new VertexPointXYZ();
+                    tag_corner->setEstimate(c_pose.translation());
+                    tag_corner->setFixed(true);
+                    tag_corner->setId(v_i);
+                    optimizer.addVertex(tag_corner);
+                    v_i++;
+                    corners[i] = tag_corner;
+                    i++;
+                }
+                tag_vertices[tag_id] = corners;
+            }
             tag_obs_map[tag_obs["pose_id"].get<int>()].push_back( {
                 tag_obs["tag_id"].get<int>(),
                 tag_obs["tag_corners_pixel_coordinates"]
@@ -151,11 +162,13 @@ int main(int argc, char const* argv[]) {
                 int k = 0;
                 for (auto corner_vert : tag_vertices[obs.tag_id]) {
                     EdgeProjectP2MC *e_p = new EdgeProjectP2MC();
-                    e_p->setVertex(0, cur_pose);
-                    e_p->setVertex(1, corner_vert);
+                    e_p->setVertex(1, cur_pose);
+                    e_p->setVertex(0, corner_vert);
                     e_p->setMeasurement(Vector2(obs.pixel_obs[k], obs.pixel_obs[k+1]));
                     e_p->setInformation(Matrix2d::Identity());
+                    e_p->setId(e_i);
                     optimizer.addEdge(e_p);
+                    e_i++;
                     k++;
                 }
             }
@@ -171,8 +184,10 @@ int main(int argc, char const* argv[]) {
         // cur pose and each of the corner poses
         e->setMeasurement(prev_pose->estimate().inverse() * cur_pose->estimate());
         e->setInformation(MatrixXd::Identity(6, 6));
+        e->setId(e_i);
         optimizer.addEdge(e);
         prev_pose = cur_pose;
+        e_i++;
     }
 
     optimizer.save("test.g2o");

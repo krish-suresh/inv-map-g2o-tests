@@ -27,6 +27,7 @@ typedef struct tag_obs {
     int tag_id;
     std::array<double, 8> pixel_obs;
     std::array<double, 4> cam_int;
+    SE3Quat tag_pose;
 } TagObs;
 
 int main(int argc, char const* argv[]) {
@@ -42,6 +43,7 @@ int main(int argc, char const* argv[]) {
     corner_pose = q_no;
 
     std::map<int, std::array<Eigen::Isometry3d, 4>> tag_poses;
+    std::map<int, SE3Quat> tag_c_poses;
 
     g2o::SparseOptimizer optimizer;
     optimizer.setVerbose(false);
@@ -79,6 +81,7 @@ int main(int argc, char const* argv[]) {
         Eigen::Isometry3d tag_pose;
         tag_pose = q;
         tag_pose.translation() = trans;
+        tag_c_poses[tag_id] = SE3Quat(q, trans);
         std::array<Eigen::Isometry3d, 4> corner_poses;
         // Add each tag corner to graph
         int i = 0;
@@ -117,20 +120,45 @@ int main(int argc, char const* argv[]) {
                 }
                 tag_vertices[tag_id] = corners;
             }
+            auto raw_pose = tag_obs["raw_pose"].get<std::array<double, 16>>();
+            // 0  1  2  3
+            // 4  5  6  7
+            // 8  9  10 11
+            // 12 13 14 15
+            Matrix3d rot_mat;
+            rot_mat(0, 0) = raw_pose[0];
+            rot_mat(1, 0) = raw_pose[4];
+            rot_mat(2, 0) = raw_pose[8];
+            rot_mat(0, 1) = raw_pose[1];
+            rot_mat(1, 1) = raw_pose[5];
+            rot_mat(2, 1) = raw_pose[9];
+            rot_mat(0, 2) = raw_pose[2];
+            rot_mat(1, 2) = raw_pose[6];
+            rot_mat(2, 2) = raw_pose[10];
+            Vector3d translation_vec(raw_pose[3], raw_pose[7], raw_pose[11]);
+            SE3Quat tag_pose = SE3Quat(rot_mat, translation_vec);
             tag_obs_map[tag_obs["pose_id"].get<int>()].push_back( {
                 tag_obs["tag_id"].get<int>(),
                 tag_obs["tag_corners_pixel_coordinates"]
                     .get<std::array<double, 8>>(),
-                tag_obs["camera_intrinsics"].get<std::array<double, 4>>()});
+                tag_obs["camera_intrinsics"].get<std::array<double, 4>>(),
+                tag_pose
+                });
         }
     }
     std::cout << "TAGS ADDED"<<"\n";
     // Loop through poses, check if tag obs exists, if true
     VertexCam* prev_pose;
+    SE3Quat odom_adjust;
+    bool det_first_tag = false;
     for (int i = 0; i < pose_data.size(); i++) {
         auto odom_data = pose_data[i];
         auto raw_pose = odom_data["pose"].get<std::array<double, 16>>();
         auto odom_id = odom_data["id"].get<int>();
+        // 0  4  8  12
+        // 1  5  9  13
+        // 2  6  10 14
+        // 3  7  11 15
         Matrix3d rot_mat;
         rot_mat(0, 0) = raw_pose[0];
         rot_mat(1, 0) = raw_pose[1];
@@ -143,6 +171,19 @@ int main(int argc, char const* argv[]) {
         rot_mat(2, 2) = raw_pose[10];
         Vector3d translation_vec(raw_pose[12], raw_pose[13], raw_pose[14]);
         SE3Quat pose_se3 = SE3Quat(rot_mat, translation_vec);
+
+        if (!det_first_tag && tag_obs_map.find(odom_id) != tag_obs_map.end()) {
+            continue;
+        } else if (!det_first_tag) {
+            auto first_tag = tag_obs_map[odom_id][0];
+            // Find the world adjust transformation 
+            odom_adjust = first_tag.tag_pose.inverse()*tag_c_poses[first_tag.tag_id];
+            pose_se3 = pose_se3*odom_adjust;
+            det_first_tag = true;
+        } else {
+            // Apply world adjust to all other poses
+            pose_se3 = pose_se3*odom_adjust;
+        }
         SBACam odom_pose = SBACam(pose_se3);
 
         if (tag_obs_map.find(odom_id) != tag_obs_map.end()) {
@@ -150,7 +191,6 @@ int main(int argc, char const* argv[]) {
             odom_pose.setKcam(obs.cam_int[0], obs.cam_int[1], obs.cam_int[2],
                               obs.cam_int[3], 1);
         }
-
         VertexCam* cur_pose = new VertexCam();
         cur_pose->setEstimate(odom_pose);
         cur_pose->setId(v_i);
@@ -192,9 +232,9 @@ int main(int argc, char const* argv[]) {
 
     optimizer.save("test.g2o");
     std::cout << "SAVE" << "\n";
-    optimizer.setVerbose(true);
-    optimizer.initializeOptimization();
-    std::cout << "Initialize" << "\n";
-    optimizer.optimize(1);
+    // optimizer.setVerbose(true);
+    // optimizer.initializeOptimization();
+    // std::cout << "Initialize" << "\n";
+    // optimizer.optimize(1);
     return 0;
 }

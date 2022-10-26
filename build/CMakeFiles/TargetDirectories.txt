@@ -1,3 +1,0 @@
-/home/ksuresh/inv-map-work-22/build/CMakeFiles/rebuild_cache.dir
-/home/ksuresh/inv-map-work-22/build/CMakeFiles/edit_cache.dir
-/home/ksuresh/inv-map-work-22/build/CMakeFiles/parsemap.dir

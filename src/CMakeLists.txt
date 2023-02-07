@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 project(inv)
 SET (G2O_LIBS g2o_csparse_extension g2o_cli g2o_core g2o_interface g2o_parser g2o_solver_cholmod
 g2o_solver_csparse g2o_solver_dense g2o_solver_pcg g2o_stuff g2o_types_icp
-g2o_types_sba g2o_types_sim3 g2o_types_slam2d g2o_types_slam3d)
+g2o_types_sba g2o_types_sim3 g2o_types_slam2d g2o_types_slam3d glog)
 add_executable(parsemap parsemap.cpp)
 target_link_libraries(parsemap ${G2O_LIBS})
 

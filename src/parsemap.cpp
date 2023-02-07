@@ -10,6 +10,7 @@
 #include <g2o/types/sba/edge_sba_cam.h>
 #include <g2o/types/sba/vertex_cam.h>
 #include <g2o/types/slam3d/vertex_pointxyz.h>
+#include <g2o/types/sba/edge_sbacam_gravity.h>
 
 #include <fstream>
 #include <nlohmann/json.hpp>
@@ -18,10 +19,6 @@ using json = nlohmann::json;
 using namespace g2o;
 using namespace Eigen;
 
-// 0
-//
-//
-//
 
 typedef struct tag_obs {
     int tag_id;
@@ -31,20 +28,26 @@ typedef struct tag_obs {
 } TagObs;
 
 int main(int argc, char const* argv[]) {
+    // Setting up tag corners in Tag's Frame
     double half_tag_width = 0.173 / 2;
     Vector3d tl(-half_tag_width, half_tag_width, 0);
     Vector3d tr(half_tag_width, half_tag_width, 0);
     Vector3d bl(-half_tag_width, -half_tag_width, 0);
     Vector3d br(half_tag_width, -half_tag_width, 0);
     std::array<Vector3d, 4> corners = {bl, br, tr, tl};
+
+    // Tag origin in tag's frame
     Eigen::Quaterniond q_no;
     q_no.setIdentity();
     Eigen::Isometry3d corner_pose;
     corner_pose = q_no;
 
+    // Tag corner poses
     std::map<int, std::array<Eigen::Isometry3d, 4>> tag_poses;
+    // Tag center poses
     std::map<int, SE3Quat> tag_c_poses;
 
+    // Set up optimizer
     g2o::SparseOptimizer optimizer;
     optimizer.setVerbose(false);
     std::unique_ptr<g2o::BlockSolver_6_3::LinearSolverType> linearSolver;
@@ -57,17 +60,18 @@ int main(int argc, char const* argv[]) {
 
     optimizer.setAlgorithm(solver);
 
+    // Load Map
     std::ifstream f("map.json");
     json data = json::parse(f);
     auto tags = data["tag_vertices"];
-    int v_i = 0;
-    int e_i = 0;
+    int v_i = 0; // Vertex index
+    int e_i = 0; // Edge index
     for (auto tag : tags) {
         auto q_x = tag["rotation"]["x"].get<double>();
         auto q_y = tag["rotation"]["y"].get<double>();
         auto q_z = tag["rotation"]["z"].get<double>();
         auto q_w = tag["rotation"]["w"].get<double>();
-        auto x = tag["translation"]["x"].get<double>();
+        auto x = tag["translation"]["x"].get<double>() + 70;
         auto y = tag["translation"]["y"].get<double>();
         auto z = tag["translation"]["z"].get<double>();
         auto tag_id = tag["id"].get<int>();
@@ -75,15 +79,16 @@ int main(int argc, char const* argv[]) {
                   << ","
                   << "\n";
 
-        // Tag Pose
+        // Tag Center Pose
         Vector3d trans(x, y, z);
         Eigen::Quaterniond q(q_w, q_x, q_y, q_z);
         Eigen::Isometry3d tag_pose;
         tag_pose = q;
         tag_pose.translation() = trans;
         tag_c_poses[tag_id] = SE3Quat(q, trans);
+
+        // Calculate and store tag corners
         std::array<Eigen::Isometry3d, 4> corner_poses;
-        // Add each tag corner to graph
         int i = 0;
         for (auto corner : corners) {
             corner_pose.translation() = corner;
@@ -94,13 +99,14 @@ int main(int argc, char const* argv[]) {
         tag_poses[tag_id] = corner_poses;
     }
 
+    // Load Route
     std::ifstream f_nav("krishnaRaiyanPaul.json");
     json data_nav = json::parse(f_nav);
     auto pose_data = data_nav["pose_data"];
     auto tag_data = data_nav["tag_data"];
 
-    std::map<int, std::vector<TagObs>> tag_obs_map;
-    std::map<int, std::array<VertexPointXYZ*, 4>> tag_vertices;
+    std::map<int, std::vector<TagObs>> tag_obs_map; // Pose/odomid to tag observation
+    std::map<int, std::array<VertexPointXYZ*, 4>> tag_vertices; // tag id to tag corner vertexxyz
     // Load tags into map between poseid and tag obs
     for (auto tags : tag_data) {
         for (auto tag_obs : tags) {
@@ -108,17 +114,20 @@ int main(int argc, char const* argv[]) {
             if (tag_vertices.find(tag_id) == tag_vertices.end()) {
                 std::array<VertexPointXYZ*, 4> corners;
                 int i = 0;
-                for (auto c_pose : tag_poses[tag_id]) {
-                    VertexPointXYZ* tag_corner = new VertexPointXYZ();
-                    tag_corner->setEstimate(c_pose.translation());
-                    tag_corner->setFixed(true);
-                    tag_corner->setId(v_i);
-                    optimizer.addVertex(tag_corner);
-                    v_i++;
-                    corners[i] = tag_corner;
-                    i++;
+                if (tag_poses.find(tag_id) != tag_poses.end()){
+                    for (auto c_pose : tag_poses[tag_id]) {
+                        std::cout << "tag vert added: "<< tag_id<<"\n";
+                        VertexPointXYZ* tag_corner = new VertexPointXYZ();
+                        tag_corner->setEstimate(c_pose.translation());
+                        tag_corner->setFixed(true);
+                        tag_corner->setId(v_i);
+                        optimizer.addVertex(tag_corner);
+                        v_i++;
+                        corners[i] = tag_corner;
+                        i++;
+                    }
+                    tag_vertices[tag_id] = corners;
                 }
-                tag_vertices[tag_id] = corners;
             }
             auto raw_pose = tag_obs["tag_pose"].get<std::array<double, 16>>();
             // 0  1  2  3
@@ -145,20 +154,24 @@ int main(int argc, char const* argv[]) {
             obs.tag_pose = SE3Quat(rot_mat, translation_vec);
             tag_obs_map[tag_obs["pose_id"].get<int>()].push_back(obs);
             // std::cout << "Added Tag Obs tid: " << tag_id
-            //           << " poseid: " << tag_obs["pose_id"].get<int>() << "\n";
+            //           << " poseid: " << tag_obs["pose_id"].get<int>() <<
+            //           "\n";
         }
     }
-    std::cout << "TAGS ADDED"
-              << "\n";
+
+
+    std::cout << "TAGS ADDED\n";
     // Loop through poses, check if tag obs exists, if true
     VertexCam* prev_pose = nullptr;
-    SE3Quat odom_adjust;
+    SE3Quat odom_adjust; // base transformation to adjust all odom to first tag obs transformation
+
+    // Calculate cam to phone transform
     Matrix3d ctoprot;
-    ctoprot<< 1, 0, 0,
-              0,-1, 0,
-              0, 0,-1;
-    SE3Quat cam_to_phone(ctoprot, Vector3(0,0,0));
-    bool det_first_tag = false;
+    ctoprot << 1, 0, 0, 0, -1, 0, 0, 0, -1;
+    SE3Quat cam_to_phone(ctoprot, Vector3(0, 0, 0));
+
+
+    bool det_first_tag = false; // Used to set when first tag is detected
     for (int i = 0; i < pose_data.size(); i++) {
         auto odom_data = pose_data[i];
         auto raw_pose = odom_data["pose"].get<std::array<double, 16>>();
@@ -178,36 +191,79 @@ int main(int argc, char const* argv[]) {
         rot_mat(1, 2) = raw_pose[9];
         rot_mat(2, 2) = raw_pose[10];
         Vector3d translation_vec(raw_pose[12], raw_pose[13], raw_pose[14]);
-        SE3Quat pose_se3 = SE3Quat(rot_mat, translation_vec)*cam_to_phone;
+        // phone_to_odom
+        SE3Quat pose_se3 = SE3Quat(rot_mat, translation_vec) * cam_to_phone;
 
         if (!det_first_tag && tag_obs_map.find(odom_id) == tag_obs_map.end()) {
-            continue;
+            continue;// Skip all first odom until first tag is seen
         } else if (!det_first_tag) {
             auto first_tag = tag_obs_map[odom_id][0];
             // Find the world adjust transformation
             auto tag_to_cam = first_tag.tag_pose;
             auto cam_to_odom = pose_se3;
-            auto tag_to_odom = cam_to_odom*tag_to_cam;
+            auto tag_to_odom = cam_to_odom * tag_to_cam;
             auto world_to_tag = tag_c_poses[first_tag.tag_id].inverse();
             odom_adjust = (tag_to_odom * world_to_tag).inverse();
             det_first_tag = true;
         }
-        pose_se3 = odom_adjust * pose_se3;
+        pose_se3 = odom_adjust * pose_se3; // Adjust raw camera pose to map localization
         SBACam odom_pose = SBACam(pose_se3);
 
+        // if camera observation exists set camera intrinsics for SBA
         if (tag_obs_map.find(odom_id) != tag_obs_map.end()) {
             auto obs = tag_obs_map[odom_id][0];
             odom_pose.setKcam(obs.cam_int[0], obs.cam_int[1], obs.cam_int[2],
                               obs.cam_int[3], 1);
+        } else {
+            odom_pose.baseline = 0;
         }
         VertexCam* cur_pose = new VertexCam();
         cur_pose->setEstimate(odom_pose);
         cur_pose->setId(v_i);
         optimizer.addVertex(cur_pose);
         v_i++;
-        if (tag_obs_map.find(odom_id) != tag_obs_map.end() && prev_pose == nullptr) {
+
+        // ***** START Gravity Edge
+        Matrix<double, 6, 1> m;
+        // Up vector in robot frame
+        m.head<3>() = Vector3d::UnitY();
+        // Observed Gravity vector in world frame
+        // TODO shouldn't this be from the sensor measurement?
+        auto eig_est = odom_pose.rotation().toRotationMatrix().transpose() * -Vector3d::UnitY();
+		Eigen::Vector3d ea;
+
+		// Transform pose from camera frame to world frame
+		Eigen::Matrix3d t = odom_pose.rotation().toRotationMatrix();
+		ea[0] = atan2(t (2, 1), t (2, 2));
+		ea[1] = asin(-t (2, 0));
+		ea[2] = atan2(t (1, 0), t (0, 0));
+
+		Eigen::Matrix3d rot =
+		   (Eigen::AngleAxisd(ea[1], Eigen::Vector3d::UnitY()) *
+			Eigen::AngleAxisd(ea[0], Eigen::Vector3d::UnitX())).toRotationMatrix();
+
+		Eigen::Vector3d estimate = rot * -Vector3d::UnitY();
+        // std::cout <<"A: \n";
+        // std::cout << eig_est << "\n";
+        // std::cout <<"B: \n";
+        // std::cout << estimate << "\n";
+        m.tail<3>() = estimate;
+        EdgeSBACamGravity* e_g = new EdgeSBACamGravity();
+        e_g->setVertex(0, cur_pose);
+        e_g->setInformation(MatrixXd::Identity(3, 3));
+        e_g->setMeasurement(m);
+        e_g->setId(e_i);
+        optimizer.addEdge(e_g);
+        e_i++;
+        // END Gravity Edge
+
+        // Add tag corner observations
+        if (tag_obs_map.find(odom_id) != tag_obs_map.end()) {
             auto tags = tag_obs_map[odom_id];
             for (auto obs : tags) {
+                if (tag_vertices.find(obs.tag_id) == tag_vertices.end()) {
+                    continue;
+                }
                 int k = 0;
                 for (auto corner_vert : tag_vertices[obs.tag_id]) {
                     EdgeProjectP2MC* e_p = new EdgeProjectP2MC();
@@ -215,13 +271,19 @@ int main(int argc, char const* argv[]) {
                     e_p->setVertex(0, corner_vert);
                     e_p->setMeasurement(
                         Vector2(obs.pixel_obs[k], obs.pixel_obs[k + 1]));
-                    e_p->setInformation(Matrix2d::Identity());
+                    e_p->setInformation(Matrix2d::Identity()*0.0001);
                     e_p->setId(e_i);
                     optimizer.addEdge(e_p);
                     e_i++;
-                    k++;
+                    // std::cout << obs.pixel_obs[k] << " " << obs.pixel_obs[k +
+                    // 1] << "\n";
+                    k += 2;
+                    // g2o::RobustKernelHuber* rk = new g2o::RobustKernelHuber;
+                    // // rk->setDelta(5);
+                    // e_p->setRobustKernel(rk);
                     e_p->computeError();
-                    std::cout << "Edge 1 " << e_p->error() << "\n";
+                    // std::cout << "Edge 1 " << e_p->error() << "\n";
+                    // std::cout << e_p->chi2() << "\n";
                     // std::cout <<"est\n";
                     // std::cout << cur_pose->estimate() <<"\n";
                     // std::cout <<"w2n\n";
@@ -229,9 +291,10 @@ int main(int argc, char const* argv[]) {
                     // std::cout <<"w2i\n";
                     // std::cout << cur_pose->estimate().w2i <<"\n";
                 }
-                break;
             }
         }
+
+        // Add Odom edges
         if (prev_pose == nullptr) {
             prev_pose = cur_pose;
             continue;
@@ -243,9 +306,18 @@ int main(int argc, char const* argv[]) {
         // cur pose and each of the corner poses
         e->setMeasurement(prev_pose->estimate().inverse() *
                           cur_pose->estimate());
-        e->setInformation(MatrixXd::Identity(6, 6));
+        auto info = MatrixXd(6, 6);
+        info(0, 0) = 1/10;
+        info(1, 1) = 1/10;
+        info(2, 2) = 1/10;
+        info(3, 3) = 1;// / 100;
+        info(4, 4) = 1;// / 100;
+        info(5, 5) = 1;// / 100;
+        e->setInformation(info);
         e->setId(e_i);
         optimizer.addEdge(e);
+        // g2o::RobustKernelHuber* rk = new g2o::RobustKernelHuber;
+        // e->setRobustKernel(rk);
         prev_pose = cur_pose;
         e_i++;
     }
@@ -256,6 +328,6 @@ int main(int argc, char const* argv[]) {
     // optimizer.setVerbose(true);
     // optimizer.initializeOptimization();
     // std::cout << "Initialize" << "\n";
-    // optimizer.optimize(1);
+    // optimizer.optimize(100);
     return 0;
 }

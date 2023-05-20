@@ -325,6 +325,7 @@ int main(int argc, char const* argv[]) {
     optimizer.save("test.g2o");
     std::cout << "SAVE"
               << "\n";
+    optimizer.load("test.g2o");
     // optimizer.setVerbose(true);
     // optimizer.initializeOptimization();
     // std::cout << "Initialize" << "\n";
